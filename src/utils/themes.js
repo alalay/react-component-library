@@ -55,5 +55,15 @@ export const darkTheme = {
   }
 };
 export const spacing = {
-  paddingNormal: '1.5rem'
-}
+	padding: {
+		smaller: '0.5rem',
+    small: '1rem',
+    normal: '1.5rem',
+		medium: '2rem',
+		large: '3rem',
+	},
+	borderRadius: {
+		small: '0.5rem',
+		default: '1rem',
+	},
+};
