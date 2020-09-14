@@ -3,7 +3,7 @@ import styled from "styled-components";
 import omit from "lodash/omit";
 import { applyStyleModifiers } from "styled-components-modifiers";
 
-import Icon from "../icon";
+import Icon from "../Icon";
 import { defaultTheme, typeScale } from "../../utils";
 
 export const BUTTON_MODIFIERS = {
