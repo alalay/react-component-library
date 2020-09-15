@@ -5,7 +5,8 @@ import { dateToStr, strToDate, isDateValid } from "./date-extraction";
 function Manager(props) {
   const [date, setDate] = useState(null);
   const [textInput, setTextInput] = useState("");
-  const [error, setError] = useState({});
+  const [errors, setErrors] = useState([]);
+  
   return (
     <DateContext.Provider
       value={{
@@ -18,7 +19,7 @@ function Manager(props) {
           setTextInput(dateToStr(date));
           props.onSelectDate(event);
           if (props.onChange) {
-            props.onChange(event, date);
+            props.onChange(event, { date, errors });
           }
         },
         onInputChange: event => {
@@ -27,15 +28,16 @@ function Manager(props) {
           if (textInput) {
             try {
               const date = strToDate(textInput);
-              if (isDateValid(date)) {
-                setDate(date);
-              }
-            } catch (e) {
-              setError(e);
+              setDate(date);
+            } catch (dateErrors) {
+              setErrors(dateErrors);
               setDate(null);
             }
           } else {
             setDate(null);
+          }
+          if (props.onChange) {
+            props.onChange(event, { date, errors });
           }
         }
       }}
