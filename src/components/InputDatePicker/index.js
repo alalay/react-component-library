@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import keycode from "keycode";
 import styled from "styled-components";
 
 import FocusManager from "./FocusManager.component";
@@ -17,10 +18,20 @@ const Popper = styled.div`
 export function InputDatePicker(props) {
   const [show, setShow] = useState(false);
   const closePicker = setShow.bind(null, false);
+  function onKeyDown(event) {
+    switch (event.keyCode) {
+      case keycode.codes.esc:
+        closePicker();
+        break;
+      default:
+        break;
+    }
+  }
   return (
     <FocusManager
       onFocusIn={() => setShow(true)}
       onFocusOut={() => setShow(false)}
+      onKeyDown={event => onKeyDown(event)}
     >
       <Manager
         onSelectDate={closePicker}
@@ -28,7 +39,7 @@ export function InputDatePicker(props) {
         onBlur={props.onBlur}
       >
         <Input />
-        <Popper>{true && <Picker />}</Popper>
+        <Popper>{show && <Picker />}</Popper>
       </Manager>
     </FocusManager>
   );
