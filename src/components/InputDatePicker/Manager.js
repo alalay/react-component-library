@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DateContext from "./Context";
-import { dateToString, stringToDate, isDateValid } from "./date-extraction";
+import { dateToStr, strToDate, isDateValid } from "./date-extraction";
 
 function Manager(props) {
   const [date, setDate] = useState(null);
@@ -15,7 +15,7 @@ function Manager(props) {
         },
         onSelectDate: (event, date) => {
           setDate(date);
-          setTextInput(dateToString(date));
+          setTextInput(dateToStr(date));
           props.onSelectDate(event);
           if (props.onChange) {
             props.onChange(event, date);
@@ -26,7 +26,7 @@ function Manager(props) {
           setTextInput(textInput);
           if (textInput) {
             try {
-              const date = stringToDate(textInput);
+              const date = strToDate(textInput);
               if (isDateValid(date)) {
                 setDate(date);
               }

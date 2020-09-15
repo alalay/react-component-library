@@ -3,11 +3,11 @@ import parse from "date-fns/parse";
 
 const DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 
-export function dateToString(date) {
+export function dateToStr(date) {
   return format(date, DEFAULT_DATE_FORMAT);
 }
 
-export function stringToDate(dateString) {
+export function strToDate(dateString) {
   let date;
   try {
     date = parse(dateString, DEFAULT_DATE_FORMAT, new Date());
