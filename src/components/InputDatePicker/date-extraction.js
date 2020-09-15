@@ -15,11 +15,13 @@ function DatePickerException(code) {
  * @param {string} dateFormat
  */
 function getDateRegexp(dateFormat) {
-  // YYYY-MM-DD => ['YYYY','MM','DD']
-  const partsOrder = dateFormat.split(/[^A-Za-z]/);
+  // ([0-9]{4})-([0-9]{2})-([0-9]{2})
   const dateFormatAsRegexp = dateFormat
     .replace(/[A-Za-z]{4}/g, "([0-9]{4})")
     .replace(/[A-Za-z]{2}/g, "([0-9]{2})");
+  // YYYY-MM-DD => ['YYYY','MM','DD']
+  const partsOrder = dateFormat.split(/[^A-Za-z]/);
+
   return {
     partsOrder,
     regexp: new RegExp(`^\\s*${dateFormatAsRegexp}\\s*$`)
