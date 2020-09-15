@@ -1,13 +1,15 @@
 import React from "react";
-import { action } from '@storybook/addon-actions';
+import { action } from "@storybook/addon-actions";
 
 import { InputDatePicker } from "./index";
 
 export default {
-	title: "InputDatePicker",
-	component: InputDatePicker,
+  title: "InputDatePicker",
+  component: InputDatePicker
 };
 
-export const test = () => <div>
-	<InputDatePicker onChange={action('onChange')} />
-</div>
+export const test = () => (
+  <div>
+    <InputDatePicker onChange={action("onChange")} onBlur={action("onBlur")} />
+  </div>
+);

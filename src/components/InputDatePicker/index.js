@@ -22,7 +22,11 @@ export function InputDatePicker(props) {
       onFocusIn={() => setShow(true)}
       onFocusOut={() => setShow(false)}
     >
-      <Manager onSelectDate={closePicker} onChange={props.onChange}>
+      <Manager
+        onSelectDate={closePicker}
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+      >
         <Input />
         <Popper>{true && <Picker />}</Popper>
       </Manager>
