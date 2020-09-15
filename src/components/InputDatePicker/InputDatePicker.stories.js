@@ -1,4 +1,6 @@
 import React from "react";
+import { action } from '@storybook/addon-actions';
+
 import { InputDatePicker } from "./index";
 
 export default {
@@ -7,5 +9,5 @@ export default {
 };
 
 export const test = () => <div>
-	<InputDatePicker />
+	<InputDatePicker onChange={action('onChange')} />
 </div>

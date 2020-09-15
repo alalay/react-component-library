@@ -39,6 +39,8 @@ function CalendarPicker(props) {
     setCalendar({ ...calendar, monthIndex: selectedMonthIndex });
   const onSelectCalendarYear = (event, selectedYear) =>
     setCalendar({ ...calendar, year: selectedYear });
+  const onClickToday = event =>
+    props.onSelectDate(event, startOfDay(new Date()));
 
   useEffect(() => {
     if (props.selectedDate) {
@@ -69,9 +71,7 @@ function CalendarPicker(props) {
         />
       )}
       <CalendarFooter>
-        <TertiaryButton onClick={() => console.log(startOfDay(new Date()))}>
-          today
-        </TertiaryButton>
+        <TertiaryButton onClick={onClickToday}>today</TertiaryButton>
       </CalendarFooter>
     </CalendarPickerContainer>
   );

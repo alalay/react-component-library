@@ -17,6 +17,9 @@ function Manager(props) {
           setDate(date);
           setTextInput(dateToString(date));
           props.onSelectDate(event);
+          if (props.onChange) {
+            props.onChange(event, date);
+          }
         },
         onInputChange: event => {
           const textInput = event.target.value;
