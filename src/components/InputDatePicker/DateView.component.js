@@ -52,6 +52,8 @@ function DateView(props) {
       }}
       bodyElement={
         <DatePicker
+          goToPreviousMonth={goToPreviousMonth}
+          goToNextMonth={goToNextMonth}
           calendar={props.calendar}
           onSelectDate={props.onSelectDate}
           selectedDate={props.selectedDate}

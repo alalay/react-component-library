@@ -7,6 +7,7 @@ import Picker from "./Picker";
 import Input from "./Input";
 import Manager from "./Manager";
 import { neutral } from "../../utils";
+import { focusOnCalendar } from "./withCalendarGesture";
 
 const Popper = styled.div`
   width: 31rem;
@@ -21,6 +22,7 @@ export function InputDatePicker(props) {
   const closePicker = setShow.bind(null, false);
   const openPicker = setShow.bind(null, true);
   const inputRef = useRef(null);
+  const containerRef = useRef(null);
 
   function onClick(event) {
     openPicker();
@@ -30,6 +32,16 @@ export function InputDatePicker(props) {
       case keycode.codes.esc:
         inputRef.current.focus();
         closePicker();
+        break;
+      case keycode.codes.down:
+        if (event.target !== inputRef.current) {
+          return;
+        }
+        if (!show) {
+          openPicker();
+        } else {
+          focusOnCalendar(containerRef.current)
+        }
         break;
       default:
         break;
@@ -55,11 +67,11 @@ export function InputDatePicker(props) {
       onClick={onClick}
       onFocusIn={onFocus}
       onFocusOut={() => setShow(false)}
-      onKeyDown={event => onKeyDown(event)}
+      onKeyDown={onKeyDown}
     >
       <Manager onChange={onChange} onBlur={props.onBlur}>
         <Input ref={inputRef} />
-        <Popper onMouseDown={event => event.stopPropagation()}>
+        <Popper onMouseDown={event => event.stopPropagation()} ref={containerRef}>
           {show && <Picker />}
         </Popper>
       </Manager>

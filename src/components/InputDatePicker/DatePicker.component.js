@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { tint } from "polished";
 import memoize from "lodash/memoize";
 import getDate from "date-fns/getDate";
@@ -11,6 +11,7 @@ import styled, { css } from "styled-components";
 import { TertiaryButton } from "../Button";
 import { neutral, defaultTheme, spacing } from "../../utils";
 import { pickerAction } from "./mixins";
+import { withCalendarGesture } from "./withCalendarGesture";
 
 const getDayNames = memoize(buildDayNames);
 
@@ -71,9 +72,10 @@ function isCurrentMonth(date, monthIndex) {
 function DatePicker(props) {
   const getWeeks = memoize(buildWeeks, (year, month) => `${year}-${month}`);
   const { year, monthIndex } = props.calendar;
+  const containerRef = useRef(null);
   const weekDayNames = getDayNames(0);
   return (
-    <Table>
+    <Table ref={containerRef}>
       <thead>
         <TRow>
           {weekDayNames.map((weekDay, i) => (
@@ -84,26 +86,30 @@ function DatePicker(props) {
       <tbody>
         {getWeeks(year, monthIndex).map(week => (
           <CalendarRow>
-            {week.map(day => {
+            {week.map(date => {
+              const day = getDate(date);
               const tdProps = {};
-              const isSelected = isSameDay(day, props.selectedDate);
+              const isSelected = isSameDay(date, props.selectedDate);
               if (isSelected) {
                 tdProps["aria-current"] = "date";
               }
-              const buttonProps = isCurrentMonth(day, monthIndex)
-                ? { "data-value": "day" }
+              const buttonProps = isCurrentMonth(date, monthIndex)
+                ? { "data-value": day }
                 : undefined;
               return (
                 <td {...tdProps}>
                   <CalendarDay
                     modifiers={["small"]}
-                    onClick={event => props.onSelectDate(event, day)}
-                    isToday={isToday(day)}
-                    isCurrentMonth={isCurrentMonth(day, monthIndex)}
+                    onClick={event => props.onSelectDate(event, date)}
+                    isToday={isToday(date)}
+                    isCurrentMonth={isCurrentMonth(date, monthIndex)}
                     isSelected={isSelected}
                     {...buttonProps}
+                    onKeyDown={event =>
+                      props.onKeyDown(event, containerRef.current, day - 1)
+                    }
                   >
-                    {getDate(day)}
+                    {getDate(date)}
                   </CalendarDay>
                 </td>
               );
@@ -114,4 +120,4 @@ function DatePicker(props) {
     </Table>
   );
 }
-export default DatePicker;
+export default withCalendarGesture(DatePicker);
