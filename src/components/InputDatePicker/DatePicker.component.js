@@ -38,9 +38,7 @@ const CalendarRow = styled.tr`
   height: 3.6rem;
   text-align: center;
 `;
-function isCurrentMonth(date, monthIndex) {
-  return getMonth(date) === monthIndex;
-}
+
 const CalendarDay = styled(TertiaryButton)`
   height: 2.4rem;
   width: 2.4rem;
@@ -67,6 +65,9 @@ const CalendarDay = styled(TertiaryButton)`
   ${pickerAction}
 `;
 
+function isCurrentMonth(date, monthIndex) {
+  return getMonth(date) === monthIndex;
+}
 function DatePicker(props) {
   const getWeeks = memoize(buildWeeks, (year, month) => `${year}-${month}`);
   const { year, monthIndex } = props.calendar;
@@ -83,19 +84,30 @@ function DatePicker(props) {
       <tbody>
         {getWeeks(year, monthIndex).map(week => (
           <CalendarRow>
-            {week.map(day => (
-              <td>
-                <CalendarDay
-                  modifiers={["small"]}
-                  onClick={event => props.onSelectDate(event, day)}
-                  isToday={isToday(day)}
-                  isCurrentMonth={isCurrentMonth(day, monthIndex)}
-                  isSelected={isSameDay(day, props.selectedDate)}
-                >
-                  {getDate(day)}
-                </CalendarDay>
-              </td>
-            ))}
+            {week.map(day => {
+              const tdProps = {};
+              const isSelected = isSameDay(day, props.selectedDate);
+              if (isSelected) {
+                tdProps["aria-current"] = "date";
+              }
+              const buttonProps = isCurrentMonth(day, monthIndex)
+                ? { "data-value": "day" }
+                : undefined;
+              return (
+                <td {...tdProps}>
+                  <CalendarDay
+                    modifiers={["small"]}
+                    onClick={event => props.onSelectDate(event, day)}
+                    isToday={isToday(day)}
+                    isCurrentMonth={isCurrentMonth(day, monthIndex)}
+                    isSelected={isSelected}
+                    {...buttonProps}
+                  >
+                    {getDate(day)}
+                  </CalendarDay>
+                </td>
+              );
+            })}
           </CalendarRow>
         ))}
       </tbody>

@@ -1,10 +1,9 @@
 import React from "react";
-import chunk from "lodash/chunk";
-import format from "date-fns/format";
-import addMonths from "date-fns/addMonths";
 import styled, { css } from "styled-components";
-import { neutral } from "../../utils";
+
+import { buildMonths } from "./generator";
 import { TertiaryButton } from "../Button";
+import { neutral } from "../../utils";
 
 const pickerAction = props => css`
   font-size: 1.2rem;
@@ -38,17 +37,6 @@ const MonthButton = styled(TertiaryButton)`
   padding: 0;
 `;
 
-function buildMonths(size) {
-  const months = new Array(12)
-    .fill(0)
-    .map((_, i) => i)
-    .map(monthIndex => ({
-      index: monthIndex,
-      name: format(addMonths(new Date(0), monthIndex), "MMMM")
-    }));
-  return chunk(months, size);
-}
-
 function MonthPicker(props) {
   const months = buildMonths(3);
   return (
@@ -56,15 +44,23 @@ function MonthPicker(props) {
       <tbody>
         {months.map(row => (
           <MonthRow>
-            {row.map(month => (
-              <MonthCol>
-                <MonthButton
-                  onClick={event => props.onSelect(event, month.index)}
-                >
-                  {month.name}
-                </MonthButton>
-              </MonthCol>
-            ))}
+            {row.map(month => {
+              const isSelected = month.index === props.selectedMonthIndex;
+              const tdProps = {};
+              if (isSelected) {
+                tdProps["aria-current"] = "date";
+              }
+              return (
+                <MonthCol {...tdProps}>
+                  <MonthButton
+                    tabIndex={isSelected ? 0 : -1}
+                    onClick={event => props.onSelect(event, month.index)}
+                  >
+                    {month.name}
+                  </MonthButton>
+                </MonthCol>
+              );
+            })}
           </MonthRow>
         ))}
       </tbody>

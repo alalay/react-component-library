@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import keycode from "keycode";
 import styled from "styled-components";
 
@@ -18,9 +18,15 @@ const Popper = styled.div`
 export function InputDatePicker(props) {
   const [show, setShow] = useState(false);
   const closePicker = setShow.bind(null, false);
+  const openPicker = setShow.bind(null, true);
+  const inputRef = useRef(null);
+  function onClick() {
+    openPicker();
+  }
   function onKeyDown(event) {
     switch (event.keyCode) {
       case keycode.codes.esc:
+        // inputRef.current.focus();
         closePicker();
         break;
       default:
@@ -29,6 +35,7 @@ export function InputDatePicker(props) {
   }
   return (
     <FocusManager
+      onClick={onClick}
       onFocusIn={() => setShow(true)}
       onFocusOut={() => setShow(false)}
       onKeyDown={event => onKeyDown(event)}
@@ -38,7 +45,7 @@ export function InputDatePicker(props) {
         onChange={props.onChange}
         onBlur={props.onBlur}
       >
-        <Input />
+        <Input ref={inputRef} />
         <Popper>{show && <Picker />}</Popper>
       </Manager>
     </FocusManager>

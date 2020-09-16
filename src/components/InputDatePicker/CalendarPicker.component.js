@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import startOfDay from "date-fns/startOfDay";
 
@@ -8,6 +8,7 @@ import MonthYearView from "./MonthYearView.component";
 import { spacing, neutral } from "../../utils";
 import { TertiaryButton } from "../Button";
 import { getYear, getMonth } from "date-fns/esm";
+import { focusOnCalendar } from "./withCalendarGesture";
 const CalendarPickerContainer = styled.div`
   width: 29rem;
   height: 34rem;
@@ -24,6 +25,7 @@ const CalendarFooter = styled.div`
 `;
 function CalendarPicker(props) {
   const [isDateView, setDateView] = useState(true);
+  const pickerRef = useRef(null)
   const selectedDate = props.selectedDate || new Date();
 
   const initialCalendar = {
@@ -32,8 +34,12 @@ function CalendarPicker(props) {
   };
   const [calendar, setCalendar] = useState(initialCalendar);
 
-  const setMonthYearView = setDateView.bind(null, false);
-  const onSetDateView = setDateView.bind(null, true);
+  const setView = (dateView) => {
+    setDateView(dateView);
+    setTimeout(() => focusOnCalendar(pickerRef.current));
+  }
+  const setMonthYearView = setView.bind(null, false);
+  const onSetDateView = setView.bind(null, true);
   const onSelectCalendarMonthYear = selection => setCalendar(selection);
   const onSelectCalendarMonth = (event, selectedMonthIndex) =>
     setCalendar({ ...calendar, monthIndex: selectedMonthIndex });
@@ -53,7 +59,7 @@ function CalendarPicker(props) {
   }, [props.selectedDate]);
 
   return (
-    <CalendarPickerContainer>
+    <CalendarPickerContainer tabIndex={0} ref={pickerRef}>
       {isDateView ? (
         <DateView
           calendar={calendar}

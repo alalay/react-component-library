@@ -9,10 +9,27 @@ function MonthYearView(props) {
   return (
     <ViewLayout
       header={{
-        leftElement:<TertiaryIconButton modifiers={["small"]} icon="arrowleft" onClick={props.onSelectDateView} />,
-        middleElement: <HeaderTitle {...calendar} withYearPicker onSelectYear={props.onSelectYear} />
+        leftElement: (
+          <TertiaryIconButton
+            modifiers={["small"]}
+            icon="arrowleft"
+            onClick={props.onSelectDateView}
+          />
+        ),
+        middleElement: (
+          <HeaderTitle
+            {...calendar}
+            withYearPicker
+            onSelectYear={props.onSelectYear}
+          />
+        )
       }}
-      bodyElement={<MonthPicker onSelect={props.onSelectMonth} />}
+      bodyElement={
+        <MonthPicker
+          onSelect={props.onSelectMonth}
+          selectedMonthIndex={calendar.monthIndex}
+        />
+      }
     ></ViewLayout>
   );
 }

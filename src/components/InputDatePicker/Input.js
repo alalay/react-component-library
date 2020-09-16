@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, forwardRef } from "react";
 import DateContext from "./Context";
 
-function Input(props) {
+function Input(props, ref) {
   const { value, onInputChange } = useContext(DateContext);
-  return <input value={value.textInput} onChange={onInputChange} />;
+  return <input value={value.textInput} onChange={onInputChange} ref={ref} />;
 }
 
-export default Input;
+export default forwardRef(Input);

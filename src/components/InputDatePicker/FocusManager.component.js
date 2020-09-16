@@ -21,9 +21,10 @@ function FocusManager(props) {
 
   return (
     <div
+      {...omit(props, ["onFocusIn", "onFocusOut"])}
+      tabIndex={0}
       onFocus={onFocus}
       onBlur={onBlur}
-      {...omit(props, ["onFocusIn", "onFocusOut"])}
     ></div>
   );
 }
