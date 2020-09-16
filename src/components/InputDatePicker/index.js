@@ -26,7 +26,7 @@ export function InputDatePicker(props) {
   function onKeyDown(event) {
     switch (event.keyCode) {
       case keycode.codes.esc:
-        // inputRef.current.focus();
+        inputRef.current.focus();
         closePicker();
         break;
       default:
