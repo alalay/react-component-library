@@ -17,9 +17,8 @@ function Manager(props) {
         onSelectDate: (event, date) => {
           setDate(date);
           setTextInput(dateToStr(date));
-          props.onSelectDate(event);
           if (props.onChange) {
-            props.onChange(event, { date, errors });
+            props.onChange(event, { date, errors, origin: 'PICKER' });
           }
         },
         onInputChange: event => {

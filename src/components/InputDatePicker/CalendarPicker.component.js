@@ -25,7 +25,7 @@ const CalendarFooter = styled.div`
 `;
 function CalendarPicker(props) {
   const [isDateView, setDateView] = useState(true);
-  const pickerRef = useRef(null)
+  const pickerRef = useRef(null);
   const selectedDate = props.selectedDate || new Date();
 
   const initialCalendar = {
@@ -34,10 +34,10 @@ function CalendarPicker(props) {
   };
   const [calendar, setCalendar] = useState(initialCalendar);
 
-  const setView = (dateView) => {
+  const setView = dateView => {
     setDateView(dateView);
     setTimeout(() => focusOnCalendar(pickerRef.current));
-  }
+  };
   const setMonthYearView = setView.bind(null, false);
   const onSetDateView = setView.bind(null, true);
   const onSelectCalendarMonthYear = selection => setCalendar(selection);
@@ -45,8 +45,6 @@ function CalendarPicker(props) {
     setCalendar({ ...calendar, monthIndex: selectedMonthIndex });
   const onSelectCalendarYear = (event, selectedYear) =>
     setCalendar({ ...calendar, year: selectedYear });
-  const onClickToday = event =>
-    props.onSelectDate(event, startOfDay(new Date()));
 
   useEffect(() => {
     if (props.selectedDate) {
@@ -57,6 +55,16 @@ function CalendarPicker(props) {
       });
     }
   }, [props.selectedDate]);
+  
+  function onSelectDate(event, date) {
+    event.persist();
+    setTimeout(() => {
+      props.onSelectDate(event, date);
+    });
+  }
+  function onClickToday(event) {
+    onSelectDate(event, startOfDay(new Date()));
+  }
 
   return (
     <CalendarPickerContainer tabIndex={0} ref={pickerRef}>
@@ -65,7 +73,7 @@ function CalendarPicker(props) {
           calendar={calendar}
           onTitleClick={setMonthYearView}
           onSelectMonthYear={onSelectCalendarMonthYear}
-          onSelectDate={props.onSelectDate}
+          onSelectDate={onSelectDate}
           selectedDate={props.selectedDate}
         />
       ) : (

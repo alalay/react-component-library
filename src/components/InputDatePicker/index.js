@@ -17,10 +17,12 @@ const Popper = styled.div`
 
 export function InputDatePicker(props) {
   const [show, setShow] = useState(false);
+  const [picked, setPicked] = useState(false);
   const closePicker = setShow.bind(null, false);
   const openPicker = setShow.bind(null, true);
   const inputRef = useRef(null);
-  function onClick() {
+
+  function onClick(event) {
     openPicker();
   }
   function onKeyDown(event) {
@@ -33,20 +35,33 @@ export function InputDatePicker(props) {
         break;
     }
   }
+  function onChange(event, payload) {
+    if (payload.origin === "PICKER") {
+      setPicked(true);
+      inputRef.current.focus();
+      closePicker();
+    }
+    if (props.onChange) {
+      props.onChange(event, payload);
+    }
+  }
+  function onFocus() {
+    if (!picked) {
+      openPicker();
+    }
+  }
   return (
     <FocusManager
       onClick={onClick}
-      onFocusIn={() => setShow(true)}
+      onFocusIn={onFocus}
       onFocusOut={() => setShow(false)}
       onKeyDown={event => onKeyDown(event)}
     >
-      <Manager
-        onSelectDate={closePicker}
-        onChange={props.onChange}
-        onBlur={props.onBlur}
-      >
+      <Manager onChange={onChange} onBlur={props.onBlur}>
         <Input ref={inputRef} />
-        <Popper>{show && <Picker />}</Popper>
+        <Popper onMouseDown={event => event.stopPropagation()}>
+          {show && <Picker />}
+        </Popper>
       </Manager>
     </FocusManager>
   );
