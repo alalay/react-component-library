@@ -9,7 +9,7 @@ function Input(props, ref) {
       debounceTimeout={300}
       value={value.textInput}
       onChange={onInputChange}
-      ref={ref}
+      inputRef={ref}
     />
   );
 }
