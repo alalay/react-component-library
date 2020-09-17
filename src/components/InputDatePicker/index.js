@@ -40,7 +40,7 @@ export function InputDatePicker(props) {
         if (!show) {
           openPicker();
         } else {
-          focusOnCalendar(containerRef.current)
+          focusOnCalendar(containerRef.current);
         }
         break;
       default:
@@ -68,11 +68,15 @@ export function InputDatePicker(props) {
       onFocusIn={onFocus}
       onFocusOut={() => setShow(false)}
       onKeyDown={onKeyDown}
+      style={{ display: "inline-block" }}
     >
       <Manager onChange={onChange} onBlur={props.onBlur}>
         <Input ref={inputRef} />
-        <Popper onMouseDown={event => event.stopPropagation()} ref={containerRef}>
-          {true && <Picker />}
+        <Popper
+          onMouseDown={event => event.stopPropagation()}
+          ref={containerRef}
+        >
+          {show && <Picker />}
         </Popper>
       </Manager>
     </FocusManager>
