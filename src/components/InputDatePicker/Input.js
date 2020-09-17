@@ -6,6 +6,7 @@ function Input(props, ref) {
   const { value, onInputChange } = useContext(DateContext);
   return (
     <DebounceInput
+      placeholder="YYYY-MM-DD"
       debounceTimeout={300}
       value={value.textInput}
       onChange={onInputChange}
