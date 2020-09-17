@@ -1,6 +1,8 @@
 import React from "react";
 import keycode from "keycode";
 
+const FIRST = 0;
+const LAST = Number.POSITIVE_INFINITY;
 /**
  * Focus management on calendar:
  * 1. try to focus on the selected item;
@@ -59,22 +61,54 @@ function focusOnDay(
   }
 }
 
+/**
+ * Focus on the item within the current calendar.
+ * If the day index is out of the calendar's limits, it focuses on the limits.
+ */
+function focusWithinCurrentCalendar(calendarRef, indexToFocus) {
+	const allItems = getAllItems(calendarRef);
+	if (indexToFocus === FIRST || indexToFocus < 0) {
+		focusOn(allItems[0]);
+	} else if (indexToFocus === LAST || indexToFocus > allItems.length - 1) {
+		focusOn(allItems[allItems.length - 1]);
+	} else {
+		focusOn(allItems[indexToFocus]);
+	}
+}
+/**
+ * Switch month and focus on the same focused day or the month's limits if it's out of the limits
+ */
+function switchMonth(calendarRef, indexToFocus, monthSwitcher) {
+	monthSwitcher(() => {
+		focusOn(focusWithinCurrentCalendar(calendarRef, indexToFocus));
+	});
+}
+
+
 export function withCalendarGesture(WrappedComponent) {
   function CalendarGesture(props) {
-    function onKeyDown(event, containerRef, dayIndex) {
+    function onKeyDown(event, calendarRef, dayIndex) {
       switch (event.keyCode) {
         case keycode.codes.down:
           // 先不stopPropagation
-          focusOnDay(containerRef, dayIndex + 7, props);
+          focusOnDay(calendarRef, dayIndex + 7, props);
           break;
         case keycode.codes.up:
-          focusOnDay(containerRef, dayIndex - 7, props);
+          focusOnDay(calendarRef, dayIndex - 7, props);
           break;
         case keycode.codes.left:
-          focusOnDay(containerRef, dayIndex - 1, props);
+          focusOnDay(calendarRef, dayIndex - 1, props);
           break;
         case keycode.codes.right:
-          focusOnDay(containerRef, dayIndex + 1, props);
+          focusOnDay(calendarRef, dayIndex + 1, props);
+          break;
+        case keycode.codes["page up"]:
+          event.stopPropagation();
+          switchMonth(calendarRef, dayIndex, props.goToPreviousMonth);
+          break;
+        case keycode.codes["page down"]:
+          event.stopPropagation();
+          switchMonth(calendarRef, dayIndex, props.goToNextMonth);
           break;
         default:
           break;
