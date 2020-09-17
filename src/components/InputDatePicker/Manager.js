@@ -6,7 +6,13 @@ function Manager(props) {
   const [date, setDate] = useState(null);
   const [textInput, setTextInput] = useState("");
   const [errors, setErrors] = useState([]);
-  
+
+  function onChange(event, payload) {
+    if (props.onChange) {
+      props.onChange(event, payload);
+    }
+  }
+
   return (
     <DateContext.Provider
       value={{
@@ -17,27 +23,29 @@ function Manager(props) {
         onSelectDate: (event, date) => {
           setDate(date);
           setTextInput(dateToStr(date));
-          if (props.onChange) {
-            props.onChange(event, { date, errors, origin: 'PICKER' });
-          }
+          onChange(event, {
+            date,
+            textInput,
+            errors,
+            origin: "PICKER"
+          });
         },
         onInputChange: event => {
+          let errors = [];
           const textInput = event.target.value;
           setTextInput(textInput);
+          let date = null;
           if (textInput) {
             try {
-              const date = strToDate(textInput);
-              setDate(date);
+              date = strToDate(textInput);
             } catch (dateErrors) {
-              setErrors(dateErrors);
-              setDate(null);
+              errors = dateErrors
             }
-          } else {
-            setDate(null);
           }
-          if (props.onChange) {
-            props.onChange(event, { date, errors });
-          }
+          setErrors(errors);
+          setDate(date);
+
+          onChange(event, { date, textInput, errors, origin: "INPUT" });
         }
       }}
     >
