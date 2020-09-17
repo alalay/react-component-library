@@ -75,7 +75,7 @@ export function InputDatePicker(props) {
           onMouseDown={event => event.stopPropagation()}
           ref={containerRef}
         >
-          {true && <Picker />}
+          {show && <Picker />}
         </Popper>
       </Manager>
     </FocusManager>
