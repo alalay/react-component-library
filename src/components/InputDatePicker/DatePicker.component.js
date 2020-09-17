@@ -53,7 +53,6 @@ const CalendarDay = styled(TertiaryButton)`
     props.isToday &&
     css`
       background-color: ${tint(0.9, defaultTheme.primaryColor)};
-      color: black;
       border: 0.1rem solid ${defaultTheme.primaryColor};
     `}
 
