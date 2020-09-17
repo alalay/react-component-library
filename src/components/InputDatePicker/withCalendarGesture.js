@@ -44,7 +44,7 @@ function focusOnDay(
   { goToPreviousMonth, goToNextMonth }
 ) {
   const allItems = getAllItems(containerRef);
-  if (indexToFocus > allItems.length) {
+  if (indexToFocus > allItems.length - 1) {
     goToNextMonth();
     setTimeout(() => {
       focusOn(getDay(containerRef, indexToFocus - allItems.length));
@@ -69,6 +69,12 @@ export function withCalendarGesture(WrappedComponent) {
           break;
         case keycode.codes.up:
           focusOnDay(containerRef, dayIndex - 7, props);
+          break;
+        case keycode.codes.left:
+          focusOnDay(containerRef, dayIndex - 1, props);
+          break;
+        case keycode.codes.right:
+          focusOnDay(containerRef, dayIndex + 1, props);
           break;
         default:
           break;
