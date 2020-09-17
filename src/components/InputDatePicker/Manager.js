@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DateContext from "./Context";
-import { dateToStr, strToDate, isDateValid } from "./date-extraction";
+import { dateToStr, strToDate } from "./date-extraction";
 
 function Manager(props) {
   const [date, setDate] = useState(null);
