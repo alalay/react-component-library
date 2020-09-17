@@ -21,12 +21,13 @@ function Manager(props) {
           date
         },
         onSelectDate: (event, date) => {
+          const dateString = dateToStr(date)
           setDate(date);
           setErrors([]);
-          setTextInput(dateToStr(date));
+          setTextInput(dateString);
           onChange(event, {
             date,
-            textInput,
+            textInput: dateString,
             errors: [],
             origin: "PICKER"
           });
