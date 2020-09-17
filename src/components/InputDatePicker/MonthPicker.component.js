@@ -1,13 +1,10 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { buildMonths } from "./generator";
 import { TertiaryButton } from "../Button";
 import { neutral } from "../../utils";
-
-const pickerAction = props => css`
-  font-size: 1.2rem;
-`;
+import { pickerAction } from "./mixins";
 
 const MonthTable = styled.table`
   width: 100%;
@@ -27,14 +24,14 @@ const MonthCol = styled.td`
   width: 33.3%;
 `;
 const MonthButton = styled(TertiaryButton)`
-  ${pickerAction}
-
   height: 5.7rem;
   width: 100%;
 
   background: transparent;
   border: none;
   padding: 0;
+
+  ${pickerAction}
 `;
 
 function MonthPicker(props) {
@@ -55,6 +52,7 @@ function MonthPicker(props) {
                   <MonthButton
                     tabIndex={isSelected ? 0 : -1}
                     onClick={event => props.onSelect(event, month.index)}
+                    isSelected={isSelected}
                   >
                     {month.name}
                   </MonthButton>

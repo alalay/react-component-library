@@ -1,16 +1,15 @@
 import React from "react";
 import format from "date-fns/format";
-import styled from 'styled-components'
+import styled from "styled-components";
 
 import { TertiaryButton } from "../Button";
 import DropdownButton from "./DropdownButton.component";
 import YearPicker from "./YearPicker.component";
 import { spacing } from "../../utils";
 
-const HeaderContainer  = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: ${spacing.padding.small};
 `;
 
 function HeaderTitle(props) {
@@ -29,7 +28,7 @@ function HeaderTitle(props) {
   }
   return (
     <HeaderContainer>
-      <span>{monthLabel}</span>
+      <span style={{ marginRight: spacing.padding.small }}>{monthLabel}</span>
       <DropdownButton title={yearLabel}>
         <YearPicker selectedYear={year} onSelectYear={props.onSelectYear} />
       </DropdownButton>
