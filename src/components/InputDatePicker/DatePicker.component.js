@@ -31,7 +31,7 @@ const TRow = styled.tr`
   }
   th {
     text-align: center;
-    padding-bottom: ${spacing.padding.small}px;
+    padding-bottom: ${spacing.padding.small};
   }
 `;
 
