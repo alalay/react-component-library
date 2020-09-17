@@ -10,7 +10,6 @@ import { neutral } from "../../utils";
 import { focusOnCalendar } from "./withCalendarGesture";
 
 const Popper = styled.div`
-  width: 31rem;
   background: ${neutral[100]};
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2) inset;
   z-index: 1000;
@@ -76,7 +75,7 @@ export function InputDatePicker(props) {
           onMouseDown={event => event.stopPropagation()}
           ref={containerRef}
         >
-          {show && <Picker />}
+          {true && <Picker />}
         </Popper>
       </Manager>
     </FocusManager>

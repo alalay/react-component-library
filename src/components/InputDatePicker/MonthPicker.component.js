@@ -8,11 +8,12 @@ import { pickerAction } from "./mixins";
 
 const MonthTable = styled.table`
   width: 100%;
-  tbody {
-    border: 0.1rem solid ${neutral[300]};
-  }
+  border-collapse: collapse;
+  border-spacing: 0;
 `;
-
+const MonthTableBody = styled.tbody`
+  border: 0.1rem solid ${neutral[300]}
+`;
 const MonthRow = styled.tr`
   border-bottom: 0.1rem solid ${neutral[300]};
   &:last-child {
@@ -38,7 +39,7 @@ function MonthPicker(props) {
   const months = buildMonths(3);
   return (
     <MonthTable>
-      <tbody>
+      <MonthTableBody>
         {months.map(row => (
           <MonthRow>
             {row.map(month => {
@@ -61,7 +62,7 @@ function MonthPicker(props) {
             })}
           </MonthRow>
         ))}
-      </tbody>
+      </MonthTableBody>
     </MonthTable>
   );
 }
