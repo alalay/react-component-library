@@ -55,7 +55,7 @@ function CalendarPicker(props) {
       });
     }
   }, [props.selectedDate]);
-  
+
   function onSelectDate(event, date) {
     event.persist();
     setTimeout(() => {
@@ -85,7 +85,9 @@ function CalendarPicker(props) {
         />
       )}
       <CalendarFooter>
-        <TertiaryButton onClick={onClickToday}>today</TertiaryButton>
+        <TertiaryButton modifiers={["small"]} onClick={onClickToday}>
+          today
+        </TertiaryButton>
       </CalendarFooter>
     </CalendarPickerContainer>
   );
