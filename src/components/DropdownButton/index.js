@@ -35,7 +35,6 @@ const DropdownMenu = styled.div`
 `;
 function Menu({ children }) {
   const { show, close, props } = useDropdownMenu();
-  console.log(props);
   return (
     <DropdownMenu {...props} open={show} onClick={close}>
       {children}
