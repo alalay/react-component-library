@@ -10,6 +10,9 @@ export default {
 
 export const test = () => (
   <div>
-    <InputDatePicker onChange={action("onChange")} onBlur={action("onBlur")} />
+    <InputDatePicker
+      onChange={action("onChange", { depth: 5 })}
+      onBlur={action("onBlur")}
+    />
   </div>
 );
