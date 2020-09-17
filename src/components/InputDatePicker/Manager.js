@@ -22,11 +22,12 @@ function Manager(props) {
         },
         onSelectDate: (event, date) => {
           setDate(date);
+          setErrors([]);
           setTextInput(dateToStr(date));
           onChange(event, {
             date,
             textInput,
-            errors,
+            errors: [],
             origin: "PICKER"
           });
         },
@@ -39,7 +40,9 @@ function Manager(props) {
             try {
               date = strToDate(textInput);
             } catch (dateErrors) {
-              errors = dateErrors
+              console.log(dateErrors[0]);
+
+              errors = errors.concat(dateErrors);
             }
           }
           setErrors(errors);
