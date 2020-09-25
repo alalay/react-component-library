@@ -15,12 +15,12 @@ import { withCalendarGesture } from "./withCalendarGesture";
 
 const getDayNames = memoize(buildDayNames);
 
-const Table = styled.table`
+const CalendarTable = styled.table`
   width: 100%;
   position: relative;
 `;
 
-const TRow = styled.tr`
+const CalendarHeader = styled.tr`
   &:after {
     content: "";
     border-bottom: 0.1rem solid ${neutral[300]};
@@ -74,13 +74,13 @@ function DatePicker(props) {
   const containerRef = useRef(null);
   const weekDayNames = getDayNames(0);
   return (
-    <Table ref={containerRef}>
+    <CalendarTable ref={containerRef}>
       <thead>
-        <TRow>
+        <CalendarHeader>
           {weekDayNames.map((weekDay, i) => (
             <th key={i}>{weekDay}</th>
           ))}
-        </TRow>
+        </CalendarHeader>
       </thead>
       <tbody>
         {getWeeks(year, monthIndex).map(week => (
@@ -116,7 +116,7 @@ function DatePicker(props) {
           </CalendarRow>
         ))}
       </tbody>
-    </Table>
+    </CalendarTable>
   );
 }
 export default withCalendarGesture(DatePicker);
