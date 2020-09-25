@@ -43,10 +43,10 @@ const CalendarRow = styled.tr`
 const CalendarDay = styled(TertiaryButton)`
   height: 2.4rem;
   width: 2.4rem;
-  background: transparent;
-  border: none;
-  border-radius: 50%;
   line-height: 2.4rem;
+  // background: transparent;
+  // border: none;
+  border-radius: 50%;
   padding: 0;
 
   ${props =>
