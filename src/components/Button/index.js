@@ -71,7 +71,7 @@ const IconWrapper = styled.span`
 `;
 function TertiaryIconButton(props) {
   return (
-    <TertiaryButton {...omit(props, "children")}>
+    <TertiaryButton {...omit(props, "children")} modifiers={["small"]}>
       {props.icon ? (
         <IconWrapper>
           <Icon icon={props.icon} />
