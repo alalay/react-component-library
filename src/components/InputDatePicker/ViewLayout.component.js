@@ -22,9 +22,9 @@ function ViewLayout(props) {
   return (
     <ViewLayoutContainer>
       <ViewLayoutHeader>
-        <div className="element">{leftElement}</div>
-        <div className="element">{middleElement}</div>
-        <div className="element">{rightElement}</div>
+        <div>{leftElement}</div>
+        <div>{middleElement}</div>
+        <div>{rightElement}</div>
       </ViewLayoutHeader>
       <ViewLayoutBody>{bodyElement}</ViewLayoutBody>
     </ViewLayoutContainer>
