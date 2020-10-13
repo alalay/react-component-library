@@ -12,6 +12,7 @@ import { neutral, spacing, defaultTheme } from "../../utils";
 
 const CalendarTable = styled.table`
   position: relative;
+  width: 100%;
 `;
 
 const CalendarHeader = styled.tr`
@@ -30,6 +31,7 @@ const CalendarHeader = styled.tr`
 
 const CalendarRow = styled.tr`
   height: 3.6rem;
+  text-align: center;
 `;
 
 const CalendarDay = styled(TertiaryButton)`

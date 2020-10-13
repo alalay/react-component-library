@@ -1,13 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DatePicker from "./DatePicker";
+import styled from "styled-components";
+import DateView from "./DateView";
+import { spacing, neutral } from "../../utils";
+
+const Picker = styled.div`
+  width: 29rem;
+  height: 35rem;
+  padding: ${spacing.padding.normal};
+  border: solid 0.1rem ${neutral[300]};
+`;
 
 function InputDatePicker(props) {
   return (
-    <DatePicker
-      calendar={{ year: 2020, monthIndex: 8 }}
-      selectedDate={new Date(2020, 8, 29)}
-    />
+    <Picker>
+      <DateView />
+    </Picker>
   );
 }
 
