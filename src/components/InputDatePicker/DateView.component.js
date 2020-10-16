@@ -30,7 +30,6 @@ function DateView(props) {
       header={{
         leftElement: (
           <TertiaryIconButton
-            modifiers={["small"]}
             icon="arrowleft"
             onClick={goToPreviousMonth}
           />
@@ -44,7 +43,6 @@ function DateView(props) {
         ),
         rightElement: (
           <TertiaryIconButton
-            modifiers={["small"]}
             icon="arrowright"
             onClick={goToNextMonth}
           />

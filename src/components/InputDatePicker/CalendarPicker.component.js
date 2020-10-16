@@ -9,6 +9,7 @@ import { spacing, neutral } from "../../utils";
 import { TertiaryButton } from "../Button";
 import { getYear, getMonth } from "date-fns/esm";
 import { focusOnCalendar } from "./withCalendarGesture";
+
 const CalendarPickerContainer = styled.div`
   width: 29rem;
   height: 34rem;
@@ -23,6 +24,7 @@ const CalendarFooter = styled.div`
     margin-bottom: 15px;
   }
 `;
+
 function CalendarPicker(props) {
   const [isDateView, setDateView] = useState(true);
   const pickerRef = useRef(null);
