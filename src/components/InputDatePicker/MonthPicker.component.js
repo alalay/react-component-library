@@ -8,7 +8,6 @@ import { pickerAction } from "./mixins";
 
 const MonthTable = styled.table`
   width: 100%;
-  border: 0.1rem solid ${neutral[300]};
   border-collapse: collapse;
   margin-bottom: ${spacing.padding.normal};
 `;
