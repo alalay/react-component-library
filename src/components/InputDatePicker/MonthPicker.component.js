@@ -3,33 +3,23 @@ import styled from "styled-components";
 
 import { buildMonths } from "./generator";
 import { TertiaryButton } from "../Button";
-import { neutral } from "../../utils";
+import { neutral, spacing } from "../../utils";
 import { pickerAction } from "./mixins";
 
 const MonthTable = styled.table`
   width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-`;
-const MonthTableBody = styled.tbody`
   border: 0.1rem solid ${neutral[300]};
+  border-collapse: collapse;
+  margin-bottom: ${spacing.padding.normal};
 `;
-const MonthRow = styled.tr`
-  border-bottom: 0.1rem solid ${neutral[300]};
-  &:last-child {
-    border-bottom: none;
-  }
-`;
+
 const MonthCell = styled.td`
-  border-right: 0.1rem solid ${neutral[300]};
   width: 33.3%;
+  border: 0.1rem solid ${neutral[300]};
 `;
 const MonthButton = styled(TertiaryButton)`
   height: 5.7rem;
   width: 100%;
-
-  background: transparent;
-  border: none;
   padding: 0;
   font-size: 1.2rem;
 
@@ -40,30 +30,28 @@ function MonthPicker(props) {
   const months = buildMonths(3);
   return (
     <MonthTable>
-      <MonthTableBody>
-        {months.map(row => (
-          <MonthRow>
-            {row.map(month => {
-              const isSelected = month.index === props.selectedMonthIndex;
-              const tdProps = {};
-              if (isSelected) {
-                tdProps["aria-current"] = "date";
-              }
-              return (
-                <MonthCell {...tdProps}>
-                  <MonthButton
-                    tabIndex={isSelected ? 0 : -1}
-                    onClick={event => props.onSelect(event, month.index)}
-                    isSelected={isSelected}
-                  >
-                    {month.name}
-                  </MonthButton>
-                </MonthCell>
-              );
-            })}
-          </MonthRow>
-        ))}
-      </MonthTableBody>
+      {months.map(row => (
+        <tr>
+          {row.map(month => {
+            const isSelected = month.index === props.selectedMonthIndex;
+            const tdProps = {};
+            if (isSelected) {
+              tdProps["aria-current"] = "date";
+            }
+            return (
+              <MonthCell {...tdProps}>
+                <MonthButton
+                  tabIndex={isSelected ? 0 : -1}
+                  onClick={event => props.onSelect(event, month.index)}
+                  isSelected={isSelected}
+                >
+                  {month.name}
+                </MonthButton>
+              </MonthCell>
+            );
+          })}
+        </tr>
+      ))}
     </MonthTable>
   );
 }
