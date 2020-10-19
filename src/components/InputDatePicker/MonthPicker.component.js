@@ -12,7 +12,7 @@ const MonthTable = styled.table`
   border-spacing: 0;
 `;
 const MonthTableBody = styled.tbody`
-  border: 0.1rem solid ${neutral[300]}
+  border: 0.1rem solid ${neutral[300]};
 `;
 const MonthRow = styled.tr`
   border-bottom: 0.1rem solid ${neutral[300]};
@@ -20,7 +20,7 @@ const MonthRow = styled.tr`
     border-bottom: none;
   }
 `;
-const MonthCol = styled.td`
+const MonthCell = styled.td`
   border-right: 0.1rem solid ${neutral[300]};
   width: 33.3%;
 `;
@@ -31,6 +31,7 @@ const MonthButton = styled(TertiaryButton)`
   background: transparent;
   border: none;
   padding: 0;
+  font-size: 1.2rem;
 
   ${pickerAction}
 `;
@@ -49,7 +50,7 @@ function MonthPicker(props) {
                 tdProps["aria-current"] = "date";
               }
               return (
-                <MonthCol {...tdProps}>
+                <MonthCell {...tdProps}>
                   <MonthButton
                     tabIndex={isSelected ? 0 : -1}
                     onClick={event => props.onSelect(event, month.index)}
@@ -57,7 +58,7 @@ function MonthPicker(props) {
                   >
                     {month.name}
                   </MonthButton>
-                </MonthCol>
+                </MonthCell>
               );
             })}
           </MonthRow>
