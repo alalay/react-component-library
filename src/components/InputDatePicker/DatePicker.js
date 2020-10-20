@@ -9,6 +9,7 @@ import isSameDay from "date-fns/isSameDay";
 import { buildWeeks, buildDayNames } from "./generator";
 import { TertiaryButton } from "../Button";
 import { neutral, spacing, defaultTheme } from "../../utils";
+import { selectedStyle } from "./minins";
 
 const CalendarTable = styled.table`
   position: relative;
@@ -55,12 +56,7 @@ const CalendarDay = styled(TertiaryButton)`
       opacity: 0.5;
     `}
 
-    ${props =>
-      props.isSelected &&
-      css`
-        background-color: ${defaultTheme.primaryColor};
-        color: ${defaultTheme.textColorInverted};
-      `}
+    ${selectedStyle}
 `;
 function DatePicker(props) {
   const { selectedDate, calendar } = props;

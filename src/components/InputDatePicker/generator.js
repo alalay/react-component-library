@@ -3,6 +3,7 @@ import startOfWeek from "date-fns/startOfWeek";
 import addDays from "date-fns/addDays";
 import setDay from "date-fns/setDay";
 import format from "date-fns/format";
+import setMonth from "date-fns/setMonth";
 
 export function buildWeeks(year, monthIndex) {
   const firstDayOfMonth = new Date(year, monthIndex);
@@ -21,4 +22,13 @@ export function buildDayNames(weekStartsOn) {
       const day = setDay(new Date(0), dayOfWeek);
       return format(day, "EEEEEE");
     });
+}
+
+export function buildMonths() {
+  const months = new Array(12)
+    .fill(0)
+    .map((_, i) => setMonth(new Date(0), i))
+    .map((month, j) => ({ index: j, name: format(month, "MMMM") }));
+
+  return chunk(months, 3);
 }

@@ -15,26 +15,38 @@ const Picker = styled.div`
 `;
 
 function Calendar(props) {
-  const [isDateView, setDateView] = useState(true);
+  const [isDateView, setDateView] = useState(false);
   const today = new Date();
   const initialCalendar = {
     year: getYear(today),
     monthIndex: getMonth(today)
   };
   const [calendar, setCalendar] = useState(initialCalendar);
+
+  function onSelectMonth(selectedMonthIndex) {
+    setCalendar({ ...calendar, monthIndex: selectedMonthIndex });
+  }
+  const onSetMonthYearView = setDateView.bind(null, false);
+  const onSetDateView = setDateView.bind(null, true);
   return (
     <Picker>
       {isDateView ? (
-        <DateView calendar={calendar} onSelectMonthYear={setCalendar} />
+        <DateView
+          calendar={calendar}
+          onSelectMonthYear={setCalendar}
+          onTitleClick={onSetMonthYearView}
+        />
       ) : (
-        <MonthYearView />
+        <MonthYearView
+          calendar={calendar}
+          onSelectMonth={onSelectMonth}
+          onBackClick={onSetDateView}
+        />
       )}
     </Picker>
   );
 }
 
-Calendar.propTypes = {
-    
-};
+Calendar.propTypes = {};
 
 export default Calendar;
