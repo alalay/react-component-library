@@ -9,7 +9,7 @@ import isSameDay from "date-fns/isSameDay";
 import { buildWeeks, buildDayNames } from "./generator";
 import { TertiaryButton } from "../Button";
 import { neutral, spacing, defaultTheme } from "../../utils";
-import { selectedStyle } from "./minins";
+import { selectedStyle } from "./mixins";
 
 const CalendarTable = styled.table`
   position: relative;

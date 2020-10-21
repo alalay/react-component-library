@@ -4,7 +4,7 @@ import { buildMonths } from "./generator";
 import styled, { css } from "styled-components";
 import { neutral, spacing, defaultTheme } from "../../utils";
 import { TertiaryButton } from "../Button";
-import { selectedStyle } from "./minins";
+import { selectedStyle } from "./mixins";
 
 const MonthTable = styled.table`
   width: 100%;
