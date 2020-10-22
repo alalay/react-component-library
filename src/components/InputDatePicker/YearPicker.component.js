@@ -12,7 +12,7 @@ const YearPickerContainer = styled.div`
 const YearsList = styled.ol`
   list-style: none;
   padding: 0;
-  maring: 0;
+  margin: 0;
 `;
 
 function YearPicker(props) {
