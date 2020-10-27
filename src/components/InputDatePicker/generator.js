@@ -32,3 +32,13 @@ export function buildMonths() {
 
   return chunk(months, 3);
 }
+
+export function buildYears(middle, windowSize = 3) {
+  const start = middle - windowSize;
+  const end = middle + windowSize;
+  const years = [];
+  for (let i = start; i <= end; i++) {
+    years.push(i);
+  }
+  return years;
+}

@@ -26,6 +26,9 @@ function Calendar(props) {
   function onSelectMonth(selectedMonthIndex) {
     setCalendar({ ...calendar, monthIndex: selectedMonthIndex });
   }
+  function onSelectYear(selectedYear) {
+    setCalendar({ ...calendar, year: selectedYear });
+  }
   const onSetMonthYearView = setDateView.bind(null, false);
   const onSetDateView = setDateView.bind(null, true);
   return (
@@ -41,6 +44,7 @@ function Calendar(props) {
           calendar={calendar}
           onSelectMonth={onSelectMonth}
           onBackClick={onSetDateView}
+          onSelectYear={onSelectYear}
         />
       )}
     </Picker>
