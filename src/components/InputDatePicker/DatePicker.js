@@ -59,7 +59,7 @@ const CalendarDay = styled(TertiaryButton)`
     ${selectedStyle}
 `;
 function DatePicker(props) {
-  const { selectedDate, calendar } = props;
+  const { selectedDate, calendar, onSelectDate } = props;
   const { year, monthIndex } = calendar;
   const weeks = useMemo(() => buildWeeks(year, monthIndex), [year, monthIndex]);
   const dayNames = useMemo(() => buildDayNames(0), []);
@@ -85,6 +85,7 @@ function DatePicker(props) {
                     isToday={isToday}
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}
+                    onClick={e => onSelectDate(e, day)}
                   >
                     {getDate(day)}
                   </CalendarDay>
@@ -103,7 +104,8 @@ DatePicker.propTypes = {
     year: PropTypes.number,
     monthIndex: PropTypes.number
   }),
-  selectedDate: PropTypes.instanceOf(Date)
+  selectedDate: PropTypes.instanceOf(Date),
+  onSelectDate: PropTypes.func
 };
 
 export default DatePicker;

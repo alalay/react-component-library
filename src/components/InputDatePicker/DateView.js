@@ -9,7 +9,14 @@ function modulo(m, n) {
   return ((m % n) + n) % n;
 }
 function DateView(props) {
-  const { calendar, onSelectMonthYear, onTitleClick } = props;
+  const {
+    calendar,
+    onSelectMonthYear,
+    onTitleClick,
+    selectedDate,
+    onSelectDate,
+    onClickToday
+  } = props;
   const { monthIndex, year } = calendar;
 
   function incrementMonthIndex(increment) {
@@ -41,9 +48,15 @@ function DateView(props) {
         )
       }}
       bodyElement={
-        <DatePicker calendar={calendar} selectedDate={new Date(2020, 8, 29)} />
+        <DatePicker
+          calendar={calendar}
+          selectedDate={selectedDate}
+          onSelectDate={onSelectDate}
+        />
       }
-      footerElement={<TertiaryButton>today</TertiaryButton>}
+      footerElement={
+        <TertiaryButton onClick={onClickToday}>today</TertiaryButton>
+      }
     />
   );
 }
@@ -51,7 +64,10 @@ function DateView(props) {
 DateView.propTypes = {
   calendar: DatePicker.propTypes.calendar,
   onSelectMonthYear: PropTypes.func,
-  onTitleClick: PropTypes.func
+  onTitleClick: PropTypes.func,
+  selectedDate: PropTypes.instanceOf(Date),
+  onSelectDate: PropTypes.func,
+  onClickToday: PropTypes.func
 };
 
 export default DateView;

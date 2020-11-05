@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import getYear from "date-fns/getYear";
 import getMonth from "date-fns/getMonth";
+import startOfDay from "date-fns/startOfDay";
 import styled from "styled-components";
 import DateView from "./DateView";
 import MonthYearView from "./MonthYearView";
@@ -15,6 +16,7 @@ const Picker = styled.div`
 `;
 
 function Calendar(props) {
+  const { selectedDate, onSelectDate } = props;
   const [isDateView, setDateView] = useState(true);
   const calendarRef = useRef(null);
   const today = new Date();
@@ -30,6 +32,9 @@ function Calendar(props) {
   function onSelectYear(selectedYear) {
     setCalendar({ ...calendar, year: selectedYear });
   }
+  function onClickToday(e) {
+    onSelectDate(e, startOfDay(new Date()));
+  }
   const onSetMonthYearView = setDateView.bind(null, false);
   const onSetDateView = setDateView.bind(null, true);
   useEffect(() => {
@@ -42,6 +47,9 @@ function Calendar(props) {
           calendar={calendar}
           onSelectMonthYear={setCalendar}
           onTitleClick={onSetMonthYearView}
+          selectedDate={selectedDate}
+          onSelectDate={onSelectDate}
+          onClickToday={onClickToday}
         />
       ) : (
         <MonthYearView
@@ -49,12 +57,16 @@ function Calendar(props) {
           onSelectMonth={onSelectMonth}
           onBackClick={onSetDateView}
           onSelectYear={onSelectYear}
+          onClickToday={onClickToday}
         />
       )}
     </Picker>
   );
 }
 
-Calendar.propTypes = {};
+Calendar.propTypes = {
+  selectedDate: PropTypes.instanceOf(Date),
+  onSelectDate: PropTypes.func
+};
 
 export default Calendar;

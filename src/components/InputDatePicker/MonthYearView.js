@@ -6,7 +6,13 @@ import { TertiaryButton, TertiaryIconButton } from "../Button";
 import HeaderTitle from "./HeaderTitle";
 
 function MonthYearView(props) {
-  const { calendar, onSelectMonth, onBackClick, onSelectYear } = props;
+  const {
+    calendar,
+    onSelectMonth,
+    onBackClick,
+    onSelectYear,
+    onClickToday
+  } = props;
   const { monthIndex, year } = calendar;
   return (
     <ViewLayout
@@ -19,7 +25,9 @@ function MonthYearView(props) {
       bodyElement={
         <MonthPicker selectedMonthIndex={monthIndex} onSelect={onSelectMonth} />
       }
-      footerElement={<TertiaryButton>today</TertiaryButton>}
+      footerElement={
+        <TertiaryButton onClick={onClickToday}>today</TertiaryButton>
+      }
     />
   );
 }
@@ -31,7 +39,8 @@ MonthYearView.propTypes = {
   }),
   onSelectMonth: PropTypes.func,
   onSelectYear: PropTypes.func,
-  onBackClick: PropTypes.func
+  onBackClick: PropTypes.func,
+  onClickToday: PropTypes.func
 };
 
 export default MonthYearView;
