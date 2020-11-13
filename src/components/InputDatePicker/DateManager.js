@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DateContext from "./DateContext";
-import { dateToStr } from "./date-extraction";
+import { dateToStr, strToDate } from "./date-extraction";
 
 function DateManager(props) {
   const [state, setState] = useState({ date: null, textInput: "" });
@@ -15,11 +15,34 @@ function DateManager(props) {
       props.onChange(e, nextState);
     }
   }
+  function onInputChange(e) {
+    // 更新state。
+    const textInput = e.target.value;
+    let errors = [];
+    let date = null;
+    if (textInput) {
+      try {
+        date = strToDate(textInput);
+      } catch (parseErrors) {
+        errors = parseErrors;
+      }
+    }
+    const nextState = {
+      textInput,
+      date
+    };
+    setState(nextState);
+    // 调用外部的onChange函数
+    if (props.onChange) {
+      props.onChange(e, { ...nextState, errors });
+    }
+  }
   return (
     <DateContext.Provider
       value={{
         value: state,
-        onSelectDate
+        onSelectDate,
+        onInputChange,
       }}
     >
       {props.children}

@@ -1,11 +1,18 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import DebounceInput from "react-debounce-input";
 import DateContext from "./DateContext";
 
 function Input(props) {
-  const { value } = useContext(DateContext);
+  const { value, onInputChange } = useContext(DateContext);
 
-  return <input value={value.textInput} />;
+  return (
+    <DebounceInput
+      debounceTimeout={300}
+      value={value.textInput}
+      onChange={onInputChange}
+    />
+  );
 }
 
 Input.propTypes = {};
