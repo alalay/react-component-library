@@ -11,6 +11,7 @@ function Input(props) {
       debounceTimeout={300}
       value={value.textInput}
       onChange={onInputChange}
+      {...props}
     />
   );
 }

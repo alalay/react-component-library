@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import getYear from "date-fns/getYear";
 import getMonth from "date-fns/getMonth";
@@ -37,9 +37,7 @@ function Calendar(props) {
   }
   const onSetMonthYearView = setDateView.bind(null, false);
   const onSetDateView = setDateView.bind(null, true);
-  useEffect(() => {
-    calendarRef.current.focus();
-  }, [isDateView]);
+
   return (
     <Picker tabIndex={0} ref={calendarRef}>
       {isDateView ? (

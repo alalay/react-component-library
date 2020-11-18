@@ -12,7 +12,7 @@ function DateManager(props) {
     };
     setState(nextState);
     if (props.onChange) {
-      props.onChange(e, nextState);
+      props.onChange(e, {...nextState, origin: 'PICKER'});
     }
   }
   function onInputChange(e) {
@@ -34,7 +34,7 @@ function DateManager(props) {
     setState(nextState);
     // 调用外部的onChange函数
     if (props.onChange) {
-      props.onChange(e, { ...nextState, errors });
+      props.onChange(e, { ...nextState, errors, origin: 'INPUT' });
     }
   }
   return (
