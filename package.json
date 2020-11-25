@@ -11,6 +11,7 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "date-fns": "^2.16.1",
+    "keycode": "^2.2.0",
     "lodash": "^4.17.20",
     "polished": "^3.6.6",
     "react": "^16.13.1",

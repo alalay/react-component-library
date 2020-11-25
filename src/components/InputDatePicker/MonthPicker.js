@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { buildMonths } from "./generator";
 import styled, { css } from "styled-components";
 import { neutral, spacing, defaultTheme } from "../../utils";
 import { TertiaryButton } from "../Button";
 import { selectedStyle } from "./mixins";
+import { withMonthCalendarGesture } from "./withCalendarGesture";
 
 const MonthTable = styled.table`
   width: 100%;
@@ -29,17 +30,26 @@ const MonthButton = styled(TertiaryButton)`
 function MonthPicker(props) {
   const { selectedMonthIndex, onSelect } = props;
   const months = buildMonths();
+  const calendarRef = useRef(null);
   return (
-    <MonthTable>
+    <MonthTable ref={calendarRef}>
       {months.map((row, i) => (
         <tr key={i}>
           {row.map((month, j) => {
             const isSelected = month.index === selectedMonthIndex;
+            const buttonProps = { "data-value": month.index };
+            if (isSelected) {
+              buttonProps["aria-current"] = "month";
+            }
             return (
-              <MonthCell>
+              <MonthCell key={j}>
                 <MonthButton
                   isSelected={isSelected}
                   onClick={() => onSelect(month.index)}
+                  onKeyDown={e =>
+                    props.onKeyDown(e, calendarRef.current, month.index)
+                  }
+                  {...buttonProps}
                 >
                   {month.name}
                 </MonthButton>
@@ -57,4 +67,4 @@ MonthPicker.propTypes = {
   onSelect: PropTypes.func
 };
 
-export default MonthPicker;
+export default withMonthCalendarGesture(MonthPicker, 3);

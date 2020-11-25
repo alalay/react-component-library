@@ -52,6 +52,8 @@ function DateView(props) {
           calendar={calendar}
           selectedDate={selectedDate}
           onSelectDate={onSelectDate}
+          goToNextMonth={goToNextMonth}
+          goToPreviousMonth={goToPreviousMonth}
         />
       }
       footerElement={
@@ -62,7 +64,10 @@ function DateView(props) {
 }
 
 DateView.propTypes = {
-  calendar: DatePicker.propTypes.calendar,
+  calendar: PropTypes.shape({
+    year: PropTypes.number,
+    monthIndex: PropTypes.number
+  }),
   onSelectMonthYear: PropTypes.func,
   onTitleClick: PropTypes.func,
   selectedDate: PropTypes.instanceOf(Date),

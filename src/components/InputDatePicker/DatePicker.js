@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import { tint } from "polished";
 import styled, { css } from "styled-components";
@@ -10,6 +10,7 @@ import { buildWeeks, buildDayNames } from "./generator";
 import { TertiaryButton } from "../Button";
 import { neutral, spacing, defaultTheme } from "../../utils";
 import { selectedStyle } from "./mixins";
+import withCalendarGesture from "./withCalendarGesture";
 
 const CalendarTable = styled.table`
   position: relative;
@@ -63,8 +64,9 @@ function DatePicker(props) {
   const { year, monthIndex } = calendar;
   const weeks = useMemo(() => buildWeeks(year, monthIndex), [year, monthIndex]);
   const dayNames = useMemo(() => buildDayNames(0), []);
+  const calendarRef = useRef(null)
   return (
-    <CalendarTable>
+    <CalendarTable ref={calendarRef}>
       <thead>
         <CalendarHeader>
           {dayNames.map((dayName, i) => (
@@ -79,6 +81,15 @@ function DatePicker(props) {
               const isToday = dateFnsIsToday(day);
               const isCurrentMonth = getMonth(day) === monthIndex;
               const isSelected = isSameDay(day, selectedDate);
+              // aria-current
+              const buttonProps = {};
+              const date = getDate(day);
+              if (isSelected) {
+                buttonProps["aria-current"] = "date";
+              }
+              if (isCurrentMonth) {
+                buttonProps["data-value"] = date;
+              }
               return (
                 <td key={j}>
                   <CalendarDay
@@ -86,8 +97,10 @@ function DatePicker(props) {
                     isCurrentMonth={isCurrentMonth}
                     isSelected={isSelected}
                     onClick={e => onSelectDate(e, day)}
+                    onKeyDown={e => props.onKeyDown(e, calendarRef.current, date - 1)}
+                    {...buttonProps}
                   >
-                    {getDate(day)}
+                    {date}
                   </CalendarDay>
                 </td>
               );
@@ -108,4 +121,4 @@ DatePicker.propTypes = {
   onSelectDate: PropTypes.func
 };
 
-export default DatePicker;
+export default withCalendarGesture(DatePicker);
